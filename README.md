@@ -1,13 +1,13 @@
 # Openshift CI
 
-This folder contains files, required for OpenShift CI.
-It allows us to verify, that Quarkus works on new version of Openshift.
+Folder `openshift-ci` in this repo contains files, required for OpenShift CI.
+It allows us to verify, that Quarkus works on a new version of Openshift.
 
 ## How it works
 
 The tests are run regularly (every Monday and the time of writing). Test execution is based on configs: [[1]](https://github.com/openshift/release),[[2]](https://github.com/openshift/release/pull/40279/files).
 
-During the run CI takes the Dockerfile from this folder, builds an image from it and runs tests from modules from `$PROJECTS` variable.
+During the run CI takes the Dockerfile from `openshift-ci` folder, builds an image from it and runs tests from [Quarkus TS](https://github.com/quarkus-qe/quarkus-test-suite) modules defined by `$PROJECTS` variable.
 
 Results are posted into [quarkus-qe](https://redhat-internal.slack.com/archives/C05CMLUAWTT) channel in Slack and new issue in [QQE Jira](https://issues.redhat.com/projects/QQE/summary) is created automatically for every failure. Job history can be accessed from the [Prow Dashboard](https://prow.ci.openshift.org/job-history/gs/origin-ci-test/logs/periodic-ci-quarkus-qe-quarkus-test-suite-main-quarkus-ocp4.14-lp-interop-quarkus-interop-aws) or via [dashboard](https://testgrid.k8s.io/redhat-openshift-lp-interop-release-4.14-informing#periodic-ci-quarkus-qe-quarkus-test-suite-main-quarkus-ocp4.14-lp-interop-quarkus-interop-aws&width=90).
 
@@ -54,7 +54,7 @@ You should only add stable tests without random failures to the list! Once done,
 - Create a new public Docker repository (eg `quay.io/$USER/test-container`)
 - Build and save an image for testing (you can use Docker, Podman or Buildah):
 ```
-podman build --tag=quay.io/$USER/test-container -f Dockerfile 
+podman build --tag=quay.io/$USER/test-container -f openshift-ci/Dockerfile
 podman push quay.io/$USER/test-container
 ```
 - Run the tests:
