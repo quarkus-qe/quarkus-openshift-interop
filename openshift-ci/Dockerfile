@@ -14,8 +14,8 @@ ADD https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.13.0/openshift-c
 RUN tar -xaf oc.tar.gz oc && mv oc /usr/local/bin/
 
 # these versions should be updated for every release
-ENV QUARKUS_BRANCH=2.13
-ENV QUARKUS_VERSION=2.13.7.Final-redhat-00003
+ENV QUARKUS_BRANCH=3.2
+ENV QUARKUS_VERSION=3.2.6.Final-redhat-00002
 ENV QUARKUS_PLATFORM_GROUP_ID=com.redhat.quarkus.platform
 ENV QUARKUS_PLATFORM_ARTIFACT_ID=quarkus-bom
 
