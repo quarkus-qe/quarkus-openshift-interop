@@ -10,12 +10,12 @@ RUN source "/root/.sdkman/bin/sdkman-init.sh" && sdk install java 22.3.2.r17-man
 ENV SDKMAN_DIR=/root/.sdkman
 
 # install oc client
-ADD https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.13.0/openshift-client-linux-4.13.0.tar.gz oc.tar.gz
+ADD https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.14.5/openshift-client-linux-4.14.5.tar.gz oc.tar.gz
 RUN tar -xaf oc.tar.gz oc && mv oc /usr/local/bin/
 
 # these versions should be updated for every release
 ENV QUARKUS_BRANCH=3.2
-ENV QUARKUS_VERSION=3.2.6.Final-redhat-00002
+ENV QUARKUS_VERSION=3.2.9.Final-redhat-00003
 ENV QUARKUS_PLATFORM_GROUP_ID=com.redhat.quarkus.platform
 ENV QUARKUS_PLATFORM_ARTIFACT_ID=quarkus-bom
 
