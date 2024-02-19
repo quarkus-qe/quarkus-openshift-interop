@@ -3,15 +3,26 @@ FROM registry.access.redhat.com/ubi8/ubi
 ENV LANGUAGE='en_US:en'
 WORKDIR /tmp
 
+RUN dnf install -y git glibc-devel zlib-devel gcc freetype-devel libstdc++-static --setopt=install_weak_deps=False
 # ubi8 repos contain maven 3.5 and jdk 1.8; we need something newer
-RUN dnf install -y wget git zip unzip --setopt=install_weak_deps=False
-RUN wget -O sdkman.sh https://get.sdkman.io && /bin/bash sdkman.sh
-RUN source "/root/.sdkman/bin/sdkman-init.sh" && sdk install java 22.3.2.r17-mandrel && sdk install maven 3.8.7
-ENV SDKMAN_DIR=/root/.sdkman
+# Install mandrel: https://github.com/graalvm/mandrel/releases
+ARG MANDREL_VERSION='22.3.2.1'
+ADD https://github.com/graalvm/mandrel/releases/download/mandrel-${MANDREL_VERSION}-Final/mandrel-java17-linux-amd64-${MANDREL_VERSION}-Final.tar.gz mandrel-java17-linux-amd64-${MANDREL_VERSION}-Final.tar.gz
+ADD https://github.com/graalvm/mandrel/releases/download/mandrel-${MANDREL_VERSION}-Final/mandrel-java17-linux-amd64-${MANDREL_VERSION}-Final.tar.gz.sha256 mandrel.sha256
+RUN sha256sum -c mandrel.sha256 && tar -xaf mandrel-java17-linux-amd64-${MANDREL_VERSION}-Final.tar.gz
+# Install maven: https://maven.apache.org/install.html + https://maven.apache.org/download.cgi
+ARG MAVEN_VERSION='3.9.6'
+ADD https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz maven.tar.gz
+RUN curl https://downloads.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz.sha512 > maven.sha512 && printf "\tmaven.tar.gz" >> maven.sha512 && sha512sum -c maven.sha512
+RUN tar -xaf maven.tar.gz
 
 # install oc client
 ADD https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.14.5/openshift-client-linux-4.14.5.tar.gz oc.tar.gz
 RUN tar -xaf oc.tar.gz oc && mv oc /usr/local/bin/
+
+ENV JAVA_HOME="$PWD/mandrel-java17-${MANDREL_VERSION}-Final"
+ENV GRAALVM_HOME="${JAVA_HOME}"
+ENV PATH="${JAVA_HOME}/bin:$PWD/apache-maven-${MAVEN_VERSION}/bin:${PATH}"
 
 # these versions should be updated for every release
 ENV QUARKUS_BRANCH=3.2
@@ -41,4 +52,4 @@ ADD --chmod=755 oc_login.sh /tmp/tests/
 RUN chgrp -R 0 /var && chmod -R g=u /var
 
 # test results are in $PROJECT/target/failsafe-reports/*.xml for every PROJECT in $PROJECTS.
-CMD ./oc_login.sh && source "/root/.sdkman/bin/sdkman-init.sh" && ./run.sh
+CMD ./oc_login.sh && ./run.sh
