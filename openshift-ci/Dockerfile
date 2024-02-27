@@ -1,7 +1,8 @@
 FROM registry.access.redhat.com/ubi8/ubi
 
 ENV LANGUAGE='en_US:en'
-WORKDIR /tmp
+ENV DIR=/tmp
+WORKDIR $DIR
 
 RUN dnf install -y git glibc-devel zlib-devel gcc freetype-devel libstdc++-static --setopt=install_weak_deps=False
 # ubi8 repos contain maven 3.5 and jdk 1.8; we need something newer
@@ -20,9 +21,9 @@ RUN tar -xaf maven.tar.gz
 ADD https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.14.5/openshift-client-linux-4.14.5.tar.gz oc.tar.gz
 RUN tar -xaf oc.tar.gz oc && mv oc /usr/local/bin/
 
-ENV JAVA_HOME="$PWD/mandrel-java17-${MANDREL_VERSION}-Final"
+ENV JAVA_HOME="${DIR}/mandrel-java17-${MANDREL_VERSION}-Final"
 ENV GRAALVM_HOME="${JAVA_HOME}"
-ENV PATH="${JAVA_HOME}/bin:$PWD/apache-maven-${MAVEN_VERSION}/bin:${PATH}"
+ENV PATH="${JAVA_HOME}/bin:$DIR/apache-maven-${MAVEN_VERSION}/bin:${PATH}"
 
 # these versions should be updated for every release
 ENV QUARKUS_BRANCH=3.2
