@@ -7,7 +7,7 @@ WORKDIR $DIR
 RUN dnf install -y git glibc-devel zlib-devel gcc freetype-devel libstdc++-static --setopt=install_weak_deps=False
 # ubi8 repos contain maven 3.5 and jdk 1.8; we need something newer
 # Install mandrel: https://github.com/graalvm/mandrel/releases
-ARG MANDREL_VERSION='22.3.2.1'
+ARG MANDREL_VERSION='22.3.5.0'
 ADD https://github.com/graalvm/mandrel/releases/download/mandrel-${MANDREL_VERSION}-Final/mandrel-java17-linux-amd64-${MANDREL_VERSION}-Final.tar.gz mandrel-java17-linux-amd64-${MANDREL_VERSION}-Final.tar.gz
 ADD https://github.com/graalvm/mandrel/releases/download/mandrel-${MANDREL_VERSION}-Final/mandrel-java17-linux-amd64-${MANDREL_VERSION}-Final.tar.gz.sha256 mandrel.sha256
 RUN sha256sum -c mandrel.sha256 && tar -xaf mandrel-java17-linux-amd64-${MANDREL_VERSION}-Final.tar.gz
