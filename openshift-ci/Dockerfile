@@ -27,7 +27,7 @@ ENV PATH="${JAVA_HOME}/bin:$DIR/apache-maven-${MAVEN_VERSION}/bin:${PATH}"
 
 # these versions should be updated for every release
 ENV QUARKUS_BRANCH=3.8
-ENV QUARKUS_VERSION=3.8.4.redhat-00002
+ENV QUARKUS_VERSION=3.8.5.redhat-00003
 ENV QUARKUS_PLATFORM_GROUP_ID=com.redhat.quarkus.platform
 ENV QUARKUS_PLATFORM_ARTIFACT_ID=quarkus-bom
 
