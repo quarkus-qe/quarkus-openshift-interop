@@ -7,7 +7,7 @@ WORKDIR $DIR
 RUN dnf install -y git glibc-devel zlib-devel gcc freetype-devel libstdc++-static --setopt=install_weak_deps=False
 # ubi8 repos contain maven 3.5 and jdk 1.8; we need something newer
 # Install mandrel: https://github.com/graalvm/mandrel/releases
-ARG MANDREL_VERSION='22.3.5.0'
+ARG MANDREL_VERSION='23.0.4.1'
 ADD https://github.com/graalvm/mandrel/releases/download/mandrel-${MANDREL_VERSION}-Final/mandrel-java17-linux-amd64-${MANDREL_VERSION}-Final.tar.gz mandrel-java17-linux-amd64-${MANDREL_VERSION}-Final.tar.gz
 ADD https://github.com/graalvm/mandrel/releases/download/mandrel-${MANDREL_VERSION}-Final/mandrel-java17-linux-amd64-${MANDREL_VERSION}-Final.tar.gz.sha256 mandrel.sha256
 RUN sha256sum -c mandrel.sha256 && tar -xaf mandrel-java17-linux-amd64-${MANDREL_VERSION}-Final.tar.gz
@@ -18,7 +18,7 @@ RUN curl https://downloads.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-
 RUN tar -xaf maven.tar.gz
 
 # install oc client
-ADD https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.14.5/openshift-client-linux-4.14.5.tar.gz oc.tar.gz
+ADD https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.15.21/openshift-client-linux-4.15.21.tar.gz oc.tar.gz
 RUN tar -xaf oc.tar.gz oc && mv oc /usr/local/bin/
 
 ENV JAVA_HOME="${DIR}/mandrel-java17-${MANDREL_VERSION}-Final"
