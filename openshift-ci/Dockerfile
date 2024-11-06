@@ -26,8 +26,8 @@ ENV GRAALVM_HOME="${JAVA_HOME}"
 ENV PATH="${JAVA_HOME}/bin:$DIR/apache-maven-${MAVEN_VERSION}/bin:${PATH}"
 
 # these versions should be updated for every release
-ENV QUARKUS_BRANCH=3.8
-ENV QUARKUS_VERSION=3.8.6.redhat-00005
+ENV QUARKUS_BRANCH=3.15
+ENV QUARKUS_VERSION=3.15.1.redhat-00003
 ENV QUARKUS_PLATFORM_GROUP_ID=com.redhat.quarkus.platform
 ENV QUARKUS_PLATFORM_ARTIFACT_ID=quarkus-bom
 
