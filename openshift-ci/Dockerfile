@@ -32,7 +32,7 @@ ENV QUARKUS_PLATFORM_GROUP_ID=com.redhat.quarkus.platform
 ENV QUARKUS_PLATFORM_ARTIFACT_ID=quarkus-bom
 
 ## List of projects to include in smoke test
-ENV PROJECTS=config,lifecycle-application,http/http-minimum,http/http-minimum-reactive,sql-db/sql-app,monitoring/microprofile-opentracing
+ENV PROJECTS=config,lifecycle-application,http/http-minimum,http/http-minimum-reactive,sql-db/sql-app,monitoring/micrometer-prometheus
 
 RUN git clone --depth=1 -b ${QUARKUS_BRANCH} https://github.com/quarkus-qe/quarkus-test-suite.git tests
 WORKDIR /tmp/tests
