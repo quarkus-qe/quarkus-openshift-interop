@@ -12,9 +12,9 @@ ADD https://github.com/graalvm/mandrel/releases/download/mandrel-${MANDREL_VERSI
 ADD https://github.com/graalvm/mandrel/releases/download/mandrel-${MANDREL_VERSION}-Final/mandrel-java17-linux-amd64-${MANDREL_VERSION}-Final.tar.gz.sha256 mandrel.sha256
 RUN sha256sum -c mandrel.sha256 && tar -xaf mandrel-java17-linux-amd64-${MANDREL_VERSION}-Final.tar.gz
 # Install maven: https://maven.apache.org/install.html + https://maven.apache.org/download.cgi
-ARG MAVEN_VERSION='3.9.6'
+ARG MAVEN_VERSION='3.9.9'
 ADD https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz maven.tar.gz
-RUN curl https://downloads.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz.sha512 > maven.sha512 && printf "\tmaven.tar.gz" >> maven.sha512 && sha512sum -c maven.sha512
+RUN curl https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz.sha512 > maven.sha512 && printf "\tmaven.tar.gz" >> maven.sha512 && sha512sum -c maven.sha512
 RUN tar -xaf maven.tar.gz
 
 # install oc client
