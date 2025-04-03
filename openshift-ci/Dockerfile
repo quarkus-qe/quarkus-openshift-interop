@@ -7,10 +7,10 @@ WORKDIR $DIR
 RUN dnf install -y git glibc-devel zlib-devel gcc freetype-devel libstdc++-static --setopt=install_weak_deps=False
 # ubi8 repos contain maven 3.5 and jdk 1.8; we need something newer
 # Install mandrel: https://github.com/graalvm/mandrel/releases
-ARG MANDREL_VERSION='23.0.4.1'
-ADD https://github.com/graalvm/mandrel/releases/download/mandrel-${MANDREL_VERSION}-Final/mandrel-java17-linux-amd64-${MANDREL_VERSION}-Final.tar.gz mandrel-java17-linux-amd64-${MANDREL_VERSION}-Final.tar.gz
-ADD https://github.com/graalvm/mandrel/releases/download/mandrel-${MANDREL_VERSION}-Final/mandrel-java17-linux-amd64-${MANDREL_VERSION}-Final.tar.gz.sha256 mandrel.sha256
-RUN sha256sum -c mandrel.sha256 && tar -xaf mandrel-java17-linux-amd64-${MANDREL_VERSION}-Final.tar.gz
+ARG MANDREL_VERSION='23.1.5.0'
+ADD https://github.com/graalvm/mandrel/releases/download/mandrel-${MANDREL_VERSION}-Final/mandrel-java21-linux-amd64-${MANDREL_VERSION}-Final.tar.gz mandrel-java21-linux-amd64-${MANDREL_VERSION}-Final.tar.gz
+ADD https://github.com/graalvm/mandrel/releases/download/mandrel-${MANDREL_VERSION}-Final/mandrel-java21-linux-amd64-${MANDREL_VERSION}-Final.tar.gz.sha256 mandrel.sha256
+RUN sha256sum -c mandrel.sha256 && tar -xaf mandrel-java21-linux-amd64-${MANDREL_VERSION}-Final.tar.gz
 # Install maven: https://maven.apache.org/install.html + https://maven.apache.org/download.cgi
 ARG MAVEN_VERSION='3.9.9'
 ADD https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz maven.tar.gz
@@ -18,7 +18,7 @@ RUN curl https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/ap
 RUN tar -xaf maven.tar.gz
 
 # install oc client
-ADD https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.15.21/openshift-client-linux-4.15.21.tar.gz oc.tar.gz
+ADD https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.18.7/openshift-client-linux-4.18.7.tar.gz oc.tar.gz
 RUN tar -xaf oc.tar.gz oc && mv oc /usr/local/bin/
 
 ENV JAVA_HOME="${DIR}/mandrel-java17-${MANDREL_VERSION}-Final"
@@ -27,7 +27,7 @@ ENV PATH="${JAVA_HOME}/bin:$DIR/apache-maven-${MAVEN_VERSION}/bin:${PATH}"
 
 # these versions should be updated for every release
 ENV QUARKUS_BRANCH=3.15
-ENV QUARKUS_VERSION=3.15.3.redhat-00002
+ENV QUARKUS_VERSION=3.15.4.redhat-00001
 ENV QUARKUS_PLATFORM_GROUP_ID=com.redhat.quarkus.platform
 ENV QUARKUS_PLATFORM_ARTIFACT_ID=quarkus-bom
 
