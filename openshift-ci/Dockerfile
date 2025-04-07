@@ -18,10 +18,10 @@ RUN curl https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/ap
 RUN tar -xaf maven.tar.gz
 
 # install oc client
-ADD https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.18.7/openshift-client-linux-4.18.7.tar.gz oc.tar.gz
+ADD https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux-amd64-rhel8.tar.gz oc.tar.gz
 RUN tar -xaf oc.tar.gz oc && mv oc /usr/local/bin/
 
-ENV JAVA_HOME="${DIR}/mandrel-java17-${MANDREL_VERSION}-Final"
+ENV JAVA_HOME="${DIR}/mandrel-java21-${MANDREL_VERSION}-Final"
 ENV GRAALVM_HOME="${JAVA_HOME}"
 ENV PATH="${JAVA_HOME}/bin:$DIR/apache-maven-${MAVEN_VERSION}/bin:${PATH}"
 
