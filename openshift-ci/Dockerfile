@@ -7,7 +7,7 @@ WORKDIR $DIR
 RUN dnf install -y git glibc-devel zlib-devel gcc freetype-devel libstdc++-static --setopt=install_weak_deps=False
 # ubi8 repos contain maven 3.5 and jdk 1.8; we need something newer
 # Install mandrel: https://github.com/graalvm/mandrel/releases
-ARG MANDREL_VERSION='23.1.7.0'
+ARG MANDREL_VERSION='23.1.8.0'
 ADD https://github.com/graalvm/mandrel/releases/download/mandrel-${MANDREL_VERSION}-Final/mandrel-java21-linux-amd64-${MANDREL_VERSION}-Final.tar.gz mandrel-java21-linux-amd64-${MANDREL_VERSION}-Final.tar.gz
 ADD https://github.com/graalvm/mandrel/releases/download/mandrel-${MANDREL_VERSION}-Final/mandrel-java21-linux-amd64-${MANDREL_VERSION}-Final.tar.gz.sha256 mandrel.sha256
 RUN sha256sum -c mandrel.sha256 && tar -xaf mandrel-java21-linux-amd64-${MANDREL_VERSION}-Final.tar.gz
@@ -26,8 +26,8 @@ ENV GRAALVM_HOME="${JAVA_HOME}"
 ENV PATH="${JAVA_HOME}/bin:$DIR/apache-maven-${MAVEN_VERSION}/bin:${PATH}"
 
 # these versions should be updated for every release
-ENV QUARKUS_BRANCH=3.20
-ENV QUARKUS_VERSION=3.20.3.redhat-00006
+ENV QUARKUS_BRANCH=3.27
+ENV QUARKUS_VERSION=3.27.0.redhat-00002
 ENV QUARKUS_PLATFORM_GROUP_ID=com.redhat.quarkus.platform
 ENV QUARKUS_PLATFORM_ARTIFACT_ID=quarkus-bom
 
