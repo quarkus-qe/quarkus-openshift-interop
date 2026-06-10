@@ -7,10 +7,10 @@ WORKDIR $DIR
 RUN dnf install -y git glibc-devel zlib-devel gcc freetype-devel libstdc++-static --setopt=install_weak_deps=False
 # ubi8 repos contain maven 3.5 and jdk 1.8; we need something newer
 # Install mandrel: https://github.com/graalvm/mandrel/releases
-ARG MANDREL_VERSION='23.1.8.0'
-ADD https://github.com/graalvm/mandrel/releases/download/mandrel-${MANDREL_VERSION}-Final/mandrel-java21-linux-amd64-${MANDREL_VERSION}-Final.tar.gz mandrel-java21-linux-amd64-${MANDREL_VERSION}-Final.tar.gz
-ADD https://github.com/graalvm/mandrel/releases/download/mandrel-${MANDREL_VERSION}-Final/mandrel-java21-linux-amd64-${MANDREL_VERSION}-Final.tar.gz.sha256 mandrel.sha256
-RUN sha256sum -c mandrel.sha256 && tar -xaf mandrel-java21-linux-amd64-${MANDREL_VERSION}-Final.tar.gz
+ARG MANDREL_VERSION='25.0.3.0'
+ADD https://github.com/graalvm/mandrel/releases/download/mandrel-${MANDREL_VERSION}-Final/mandrel-java25-linux-amd64-${MANDREL_VERSION}-Final.tar.gz mandrel-java25-linux-amd64-${MANDREL_VERSION}-Final.tar.gz
+ADD https://github.com/graalvm/mandrel/releases/download/mandrel-${MANDREL_VERSION}-Final/mandrel-java25-linux-amd64-${MANDREL_VERSION}-Final.tar.gz.sha256 mandrel.sha256
+RUN sha256sum -c mandrel.sha256 && tar -xaf mandrel-java25-linux-amd64-${MANDREL_VERSION}-Final.tar.gz
 # Install maven: https://maven.apache.org/install.html + https://maven.apache.org/download.cgi
 ARG MAVEN_VERSION='3.9.10'
 ADD https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz maven.tar.gz
@@ -26,8 +26,8 @@ ENV GRAALVM_HOME="${JAVA_HOME}"
 ENV PATH="${JAVA_HOME}/bin:$DIR/apache-maven-${MAVEN_VERSION}/bin:${PATH}"
 
 # these versions should be updated for every release
-ENV QUARKUS_BRANCH=3.27
-ENV QUARKUS_VERSION=3.27.3.SP1-redhat-00002
+ENV QUARKUS_BRANCH=3.33
+ENV QUARKUS_VERSION=3.33.2.redhat-00002
 ENV QUARKUS_PLATFORM_GROUP_ID=com.redhat.quarkus.platform
 ENV QUARKUS_PLATFORM_ARTIFACT_ID=quarkus-bom
 
